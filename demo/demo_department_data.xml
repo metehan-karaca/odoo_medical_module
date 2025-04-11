@@ -1,0 +1,32 @@
+<odoo>
+    <!-- Demo record for Cardiology Department -->
+    <record id="hospital_department_1" model="hospital.department">
+        <field name="name">Cardiology</field>
+        <field name="description">Department focused on heart-related health issues.</field>
+    </record>
+
+    <!-- Demo record for Neurology Department -->
+    <record id="hospital_department_2" model="hospital.department">
+        <field name="name">Neurology</field>
+        <field name="description">Department specialized in neurological disorders.</field>
+    </record>
+
+    <!-- Demo record for Pediatrics Department -->
+    <record id="hospital_department_3" model="hospital.department">
+        <field name="name">Pediatrics</field>
+        <field name="description">Department dedicated to children's health.</field>
+    </record>
+
+    <!-- Demo record for Orthopedics Department -->
+    <record id="hospital_department_4" model="hospital.department">
+        <field name="name">Orthopedics</field>
+        <field name="description">Department handling musculoskeletal issues.</field>
+    </record>
+
+    <!-- Demo record for General Surgery Department -->
+    <record id="hospital_department_5" model="hospital.department">
+        <field name="name">General Surgery</field>
+        <field name="description">Department dealing with surgical treatments.</field>
+    </record>
+
+</odoo>

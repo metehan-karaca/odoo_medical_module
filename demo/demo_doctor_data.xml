@@ -1,0 +1,35 @@
+<odoo>
+    <!-- Demo record for a Doctor -->
+    <record id="doctor_demo_1" model="hospital.doctor">
+        <field name="first_name">John</field>
+        <field name="last_name">Doe</field>
+        <field name="date_of_birth">1985-06-15</field>
+        <field name="phone">+123456789</field>
+        <field name="email">john.doe@example.com</field>
+        <field name="department_id" ref="hospital_department_1"/> <!-- Reference to a department -->
+        <field name="shift_start">9.00</field>
+        <field name="shift_end">17.00</field>
+    </record>
+
+    <record id="doctor_demo_2" model="hospital.doctor">
+        <field name="first_name">Jane</field>
+        <field name="last_name">Smith</field>
+        <field name="date_of_birth">1990-02-20</field>
+        <field name="phone">+987654321</field>
+        <field name="email">jane.smith@example.com</field>
+        <field name="department_id" ref="hospital_department_2"/> <!-- Reference to a department -->
+        <field name="shift_start">10.00</field>
+        <field name="shift_end">18.00</field>
+    </record>
+
+    <record id="doctor_demo_3" model="hospital.doctor">
+        <field name="first_name">Emily</field>
+        <field name="last_name">Johnson</field>
+        <field name="date_of_birth">1982-03-25</field>
+        <field name="phone">+192837465</field>
+        <field name="email">emily.johnson@example.com</field>
+        <field name="department_id" ref="hospital_department_1"/> <!-- Reference to a department -->
+        <field name="shift_start">8.00</field>
+        <field name="shift_end">16.00</field>
+    </record>
+</odoo>
