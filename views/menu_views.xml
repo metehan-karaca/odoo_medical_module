@@ -29,6 +29,13 @@
         <field name="target">current</field>
     </record>
 
+    <record id="action_submenu_4_1" model="ir.actions.act_window">
+        <field name="name">Appointment Wizard</field>
+        <field name="res_model">hospital.appointment.wizard</field>
+        <field name="view_mode">form</field>  
+        <field name="target">new</field>    <!-- apparently "new" makes it a pupup... -->
+    </record>    
+
     <record id="action_submenu_5" model="ir.actions.act_window">
         <field name="name">Treatments</field>
         <field name="res_model">hospital.treatment</field>
@@ -43,6 +50,7 @@
     <menuitem id="submenu_2" name="Patients" parent="main_menu" action="action_submenu_2" sequence="2"/>
     <menuitem id="submenu_3" name="Departments" parent="main_menu" action="action_submenu_3" sequence="3"/>
     <menuitem id="submenu_4" name="Appointments" parent="main_menu" action="action_submenu_4" sequence="4"/>
+    <menuitem id="submenu_4_1" name="Appointment Wizard" parent="submenu_4" action="action_submenu_4_1" sequence="1"/>
     <menuitem id="submenu_5" name="Treatments" parent="main_menu" action="action_submenu_5" sequence="5"/>
 
 

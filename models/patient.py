@@ -6,6 +6,7 @@ class Patient(models.Model):
     _name = 'hospital.patient'
     _description = 'Patient Information'
 
+
     # Patient Fields
     patient_id = fields.Char(string="Patient ID", required=True, readonly=True, copy=False, default='New', store=True)
     

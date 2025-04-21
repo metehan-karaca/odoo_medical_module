@@ -4,3 +4,5 @@ access_hospital_department_user,hospital.department user,model_hospital_departme
 access_hospital_patient_user,hospital.patient user,model_hospital_patient,base.group_user,1,1,1,1
 access_hospital_appointment_user,hospital.appointment user,model_hospital_appointment,base.group_user,1,1,1,1
 access_hospital_treatment_user,hospital.treatment user,model_hospital_treatment,base.group_user,1,1,1,1
+
+access_hospital_appointment_wizard,hospital.appointment.wizard,model_hospital_appointment_wizard,,1,1,1,1
