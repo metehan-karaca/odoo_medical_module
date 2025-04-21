@@ -3,3 +3,4 @@
 from . import models
 from . import doctor
 from . import department
+from . import patient

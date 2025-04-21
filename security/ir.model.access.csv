@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_hospital_doctor_user,hospital.doctor user,model_hospital_doctor,base.group_user,1,1,1,1
 access_hospital_department_user,hospital.department user,model_hospital_department,base.group_user,1,1,1,1
+access_hospital_patient_user,hospital.patient user,model_hospital_patient,base.group_user,1,1,1,1

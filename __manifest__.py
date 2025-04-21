@@ -3,15 +3,14 @@
     'name': "medical_appointment_system",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        Hospital Management System""",
 
     'description': """
-        Long description of module's purpose
+        Work in progress
     """,
 
     'author': "My Company",
-    'website': "http://www.y.com",
+    'website': "https://github.com/metehan-karaca/odoo_medical_module",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/15.0/odoo/addons/base/data/ir_module_category_data.xml
@@ -28,6 +27,8 @@
         'views/menu_views.xml',
         'views/templates.xml',
         'views/hospital_doctor_views.xml',
+        'views/hospital_patient_views.xml',
+        'data/hospital_sequence.xml',  # Sequence for generating patient ID
 
     ],
     # only loaded in demonstration mode
