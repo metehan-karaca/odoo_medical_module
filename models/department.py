@@ -4,7 +4,7 @@ from odoo import models, fields
 class Department(models.Model):
     _name = 'hospital.department'
     _description = 'Hospital Department'
-    _rec_name = 'code'
+    _rec_name = 'name'
 
     name = fields.Char(string="Name", required=True, store=True)
     code = fields.Char(string="Code", required=True, store=True)    

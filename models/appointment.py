@@ -3,6 +3,7 @@ from odoo import models, fields, api
 class HospitalAppointment(models.Model):
     _name = 'hospital.appointment'
     _description = 'Hospital Appointment'
+    _rec_name = 'code'
 
     appointment_date = fields.Datetime(string="Appointment Date", required=True, store=True)
     code = fields.Char(string="Code", required=True, copy=False, readonly=True, store=True, default='New')

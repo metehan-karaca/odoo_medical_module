@@ -6,6 +6,8 @@ class Patient(models.Model):
     _name = 'hospital.patient'
     _description = 'Patient Information'
 
+    _rec_name = 'full_name' #so the default name doesn't leak into gui!!!!!!!
+
 
     # Patient Fields
     patient_id = fields.Char(string="Patient ID", required=True, readonly=True, copy=False, default='New', store=True)
