@@ -3,102 +3,247 @@
 This project is a training task for an internship for learning **ODOO-15** development.  
 The goal is to build a basic **Medical Appointment System** for a hypothetical hospital using ODOO framework.
 
-Tasked Project : [Odoo_Training]()
+Tasked project : [Odoo_Training](Odoo_Training.docx)
 
 Official odoo documentation: [Odoo 15 Documentation](https://www.odoo.com/documentation/15.0/)
 
+![logo](static/description/icon.png)
+
 ## Project Overview
 
-This module introduces five main models:
-
-- Doctor
-- Patient
-- Department
-- Appointment
-- Treatment
 
 
-## Setup
-Enter the commands into terminal to follow instructions.
-### Directory Config
-mkdir ~/odoo \
-cd ~/odoo \
-mkdir odoo15 \
-cd odoo15 \
-mkdir custom 
+# Setup
 
-### Install Git
+Follow this guide step-by-step depending on your system.
+
+
+## Prerequisites
+- Ubuntu(20.04.6)
+- Or Installed WSL2 + Ubuntu (if on Windows)  
+
+---
+
+<details>
+<summary><h2>Setting up Odoo 15 on Linux / WSL2 (Ubuntu)</h2></summary>
+
+### 1. Directory Structure
+
+```bash
+mkdir ~/odoo
+cd ~/odoo
+mkdir odoo15
+cd odoo15
+mkdir custom
+```
+
+
+### 2. Install Git
+
+```bash
+sudo apt update
 sudo apt install -y git
+```
 
-### Clone Odoo 15 and update packages
-git clone https://www.github.com/odoo/odoo --depth 1 --branch 15.0 --single-branch
 
+### 3. Clone Odoo 15 Source Code
+
+```bash
+git clone https://github.com/odoo/odoo --depth 1 --branch 15.0 --single-branch
+```
+
+
+### 4. Update and Upgrade Packages
+
+```bash
 sudo apt-get update
 sudo apt-get upgrade -y
+```
 
-### Install Python and its dependencies
+
+### 5. Install Python and Dependencies
+
+```bash
 sudo apt-get install -y python3-pip python3-dev python-dev \
 libxml2-dev libxslt1-dev zlib1g-dev libsasl2-dev libldap2-dev \
 build-essential libssl-dev libffi-dev libmysqlclient-dev \
 libjpeg-dev libpq-dev libjpeg8-dev liblcms2-dev libblas-dev \
 libatlas-base-dev
+```
 
-### Install Node.js and LESS compiler
+
+### 6. Install Node.js and LESS Compiler
+
+```bash
 sudo apt-get install -y npm
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 sudo npm install -g less less-plugin-clean-css
 sudo apt-get install -y node-less
+```
 
-### Install PostgreSQL
+
+### 7. Install PostgreSQL
+
+```bash
 sudo apt-get install -y postgresql
+```
 
-### Switch to the postgres user
+
+### 8. Create PostgreSQL User
+
+Switch to the `postgres` user:
+
+```bash
 sudo su - postgres
+```
 
-### Create a new PostgreSQL user (replace <your_user> with your desired username)
-createuser --createdb --username postgres --no-createrole --no-superuser --pwprompt <your_user>
+Create your new database user:
 
-### Set a password when prompted (e.g., odoo)
+```bash
+createuser --createdb --username postgres --no-createrole --no-superuser --pwprompt your_user
+```
 
-### Open PostgreSQL shell
+Set a password (e.g., `odoo` when prompted).
+
+Enter PostgreSQL shell:
+
+```bash
 psql
+```
 
-### Grant superuser privileges
-ALTER USER <your_user> WITH SUPERUSER;
+Grant Superuser privileges:
 
-### Exit PostgreSQL shell
+```sql
+ALTER USER your_user WITH SUPERUSER;
+```
+
+Exit PostgreSQL shell:
+
+```bash
 \q
-
-### Exit postgres user
 exit
+```
 
-### Install Odoo requirements
-cd odoo \
+---
+
+### 9. Install Python Packages for Odoo
+
+```bash
+cd ~/odoo/odoo15/odoo
 sudo pip3 install -r requirements.txt
+```
 
-### Download wkhtmltopdf
+
+### 10. Install wkhtmltopdf (for PDF reports)
+
+```bash
 sudo wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.bionic_amd64.deb
-
 sudo dpkg -i wkhtmltox_0.12.5-1.bionic_amd64.deb
-
 sudo apt install -f
-### Create a configs file inside
-mkdir ~/odoo/odoo15/custom/configs/odoo.conf
+```
 
-odoo.conf: \
-addons_path = /path/to/odoo15/odoo/addons,/path/to/odoo15/custom/addons(both custom and vanilla addon paths here)
 
-### To start server:
-python3 odoo/odoo-bin -c /path/to/your/odoo.conf
+### 11. Create Odoo Configuration File
 
-### To open portal:
-http://localhost:8069
+```bash
+mkdir ~/odoo/odoo15/custom/configs
+nano ~/odoo/odoo15/custom/configs/odoo.conf
+```
 
+Paste inside `odoo.conf`:
+
+```ini
+[options]
+addons_path = /home/your_username/odoo/odoo15/odoo/addons,/home/your_username/odoo/odoo15/custom/addons
+admin_passwd = admin
+db_host = False
+db_port = False
+db_user = your_user
+db_password = your_password
+```
+(Replace paths and credentials as needed.)
+
+
+### 12. Starting the Odoo Server
+
+```bash
+python3 ~/odoo/odoo15/odoo/odoo-bin -c ~/odoo/odoo15/custom/configs/odoo.conf
+```
+
+Odoo portal will open at:  
+[http://localhost:8069](http://localhost:8069)
+
+</details>
+
+
+<details>
+<summary><h2>🖥️ WSL2 + VS Code Setup (Windows Users)</h2></summary>
+
+1. **Install WSL2 and Ubuntu** if not already installed.  
+Follow Microsoft's guide: [Install WSL](https://learn.microsoft.com/en-us/windows/wsl/install)
+
+2. **Install VS Code** from [VS Code Website](https://code.visualstudio.com/).
+
+3. **Install these Extensions** inside VS Code:
+    - Remote - WSL
+    - Python
+    - GitHub Pull Requests and Issues
+
+4. **Open Ubuntu in WSL2**.
+
+5. **Use "Remote - WSL" or "Remote Explorer" tab to open your WSL2 workspace** in VS Code.
+
+6. Follow the exact same **Linux setup** instructions inside your Ubuntu terminal
+
+
+</details>
+
+---
+
+<details>
+<summary><h2>Running this module in your ODOO installation</h2></summary>
+
+1. Go to your custom addons directory:
+
+```bash
+cd ~/odoo/odoo15/custom/addons
+```
+
+2. Clone this project:
+
+```bash
+git clone https://github.com/metehan-karaca/odoo_medical_module
+```
+
+
+3. Update the Apps list inside Odoo and install the module from Odoo interface.
+(localhost:8069/web?*debug=1*...  instert *debug=1* to activate developer mode first.)
+
+</details>
+
+
+## Example Directory Structure
+
+```
+~/odoo/
+└── odoo15/
+    ├── custom/
+    │   ├── addons/
+    │   │   └── hospital_management_module/
+    │   └── configs/
+    │       └── odoo.conf
+    └── odoo/
+```
+
+---
 
 
 ### Recommended installation guide:  
 [How to Install Odoo 15 on Ubuntu 20.04 LTS](https://www.cybrosys.com/blog/how-to-install-odoo-15-on-ubuntu-2004-lts-server)
 
+---
+
+# Project Details
 
 ## Stakeholders
 
