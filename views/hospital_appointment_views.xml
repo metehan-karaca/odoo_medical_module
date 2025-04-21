@@ -26,11 +26,12 @@
                 </header>
                 <sheet>
                     <group>
-                        <field name="appointment_date"/>
-                        <field name="code"/>
-                        <field name="doctor_id" widget="many2many_tags"/>
-                        <field name="patient_id"/>
-                        <field name="stage"/>
+                        <!--added the attrs to prevent cancellation if done etc, needs work...-->
+                        <field name="appointment_date" attrs="{'readonly': [('stage', 'in', ['done', 'cancel'])]}"/>
+                        <field name="code" attrs="{'readonly': [('stage', 'in', ['done', 'cancel'])]}"/>
+                        <field name="doctor_id" widget="many2many_tags" attrs="{'readonly': [('stage', 'in', ['done', 'cancel'])]}"/>
+                        <field name="patient_id" attrs="{'readonly': [('stage', 'in', ['done', 'cancel'])]}"/>
+                        <field name="stage" attrs="{'readonly': [('stage', 'in', ['done', 'cancel'])]}"/>
                     </group>
 
                     <group string="Treatments">
