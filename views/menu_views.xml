@@ -52,6 +52,7 @@
     <menuitem id="submenu_4" name="Appointments" parent="main_menu" action="action_submenu_4" sequence="4"/> <!-- have to fix this part!!!!! -->
     <menuitem id="submenu_4_1" name="Appointments" parent="submenu_4" action="action_submenu_4" sequence="1"/>
     <menuitem id="submenu_4_2" name="Appointment Wizard" parent="submenu_4" action="action_submenu_4_2" sequence="2"/>
+    
     <menuitem id="submenu_5" name="Treatments" parent="main_menu" action="action_submenu_5" sequence="5"/>
 
 

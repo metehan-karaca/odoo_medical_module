@@ -22,3 +22,18 @@ class HospitalAppointment(models.Model):
         if vals.get('code', 'New') == 'New':
             vals['code'] = self.env['ir.sequence'].next_by_code('hospital.appointment') or 'New'
         return super(HospitalAppointment, self).create(vals)
+    
+    #added for states change buttons part
+    def set_to_in_progress(self):
+        self.write({'stage': 'in_progress'})
+
+    def set_to_done(self):
+        self.write({'stage': 'done'})
+
+    def set_to_draft(self):
+        self.write({'stage': 'draft'})
+
+    def set_to_cancel(self):
+        self.write({'stage': 'cancel'})
+
+

@@ -5,6 +5,25 @@
         <field name="model">hospital.appointment</field>
         <field name="arch" type="xml">
             <form string="Appointment">
+                <!-- states change buttons in header-->
+                <header>
+                    
+                    <button name="set_to_in_progress" type="object" string="Set to In-Progress"
+                        class="oe_highlight"
+                        attrs="{'invisible': [('stage', '!=', 'draft')]}"/>
+                        
+                    <button name="set_to_done" type="object" string="Set to Done"
+                        class="oe_highlight"
+                        attrs="{'invisible': [('stage', '!=', 'in_progress')]}"/>
+                        
+                    <button name="set_to_draft" type="object" string="Set to Draft"
+                        class="oe_highlight"
+                        attrs="{'invisible': [('stage', 'not in', ['done', 'in_progress'])]}"/>
+                        
+                    <button name="set_to_cancel" type="object" string="Set to Cancel"
+                        class="oe_highlight"
+                        attrs="{'invisible': [('stage', '=', 'cancel')]}"/>
+                </header>
                 <sheet>
                     <group>
                         <field name="appointment_date"/>
