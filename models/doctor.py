@@ -6,16 +6,16 @@ class Doctor(models.Model):
     _name = 'hospital.doctor'
     _description = 'Doctor Information'
 
-    first_name = fields.Char(string="First Name", required=True)
-    last_name = fields.Char(string="Last Name", required=True)
-    full_name = fields.Char(string="Full Name", compute="_compute_full_name", store=True)
-    date_of_birth = fields.Date(string="Date of Birth")
-    age = fields.Integer(string="Age", readonly=True, compute="_compute_age", store=True)
-    phone = fields.Char(string="Phone")
-    email = fields.Char(string="Email", required=False)
-    department_id = fields.Many2one('hospital.department', string="Department")
-    shift_start = fields.Float(string="Shift Start")
-    shift_end = fields.Float(string="Shift End")
+    first_name = fields.Char(string="First Name", required=True, store=False)
+    last_name = fields.Char(string="Last Name", required=True, store=False)
+    full_name = fields.Char(string="Full Name", compute="_compute_full_name", store=False)
+    date_of_birth = fields.Date(string="Date of Birth", store=False)
+    age = fields.Integer(string="Age", readonly=True, compute="_compute_age", store=False)
+    phone = fields.Char(string="Phone", store=False)
+    email = fields.Char(string="Email", required=False, store=False)
+    department_id = fields.Many2one('hospital.department', string="Department", store=False)
+    shift_start = fields.Float(string="Shift Start", store=False)
+    shift_end = fields.Float(string="Shift End", store=False)
 
 
     _sql_constraints = [

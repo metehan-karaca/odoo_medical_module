@@ -6,8 +6,8 @@ class Department(models.Model):
     _description = 'Hospital Department'
     _rec_name = 'code'
 
-    name = fields.Char(string="Name", required=True)
-    code = fields.Char(string="Code", required=True)
+    name = fields.Char(string="Name", required=True, store=False)
+    code = fields.Char(string="Code", required=True, store=False)    
 
     _sql_constraints = [
         ('unique_code', 'unique(code)', 'The department code must be unique.')
