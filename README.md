@@ -177,7 +177,7 @@ Odoo portal will open at:
 
 
 <details>
-<summary><h2>🖥️ WSL2 + VS Code Setup (Windows Users)</h2></summary>
+<summary><h2>WSL2 + VS Code Setup (Windows Users)</h2></summary>
 
 1. **Install WSL2 and Ubuntu** if not already installed.  
 Follow Microsoft's guide: [Install WSL](https://learn.microsoft.com/en-us/windows/wsl/install)

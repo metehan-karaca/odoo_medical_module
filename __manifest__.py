@@ -28,10 +28,12 @@
         'views/templates.xml',
         'views/hospital_doctor_views.xml',
         'views/hospital_patient_views.xml',
+        'views/hospital_appointment_views.xml',
+        'views/hospital_treatment_views.xml',
         'data/hospital_sequence.xml',  # Sequence for generating patient ID
 
     ],
-    # only loaded in demonstration mode
+    # only loaded in demonstration mode, not working yet
     'demo': [
         'demo/demo.xml',
 
