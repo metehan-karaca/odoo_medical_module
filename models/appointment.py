@@ -17,6 +17,9 @@ class HospitalAppointment(models.Model):
     ], string="Stage", default='draft', store=True)
     treatment_id = fields.One2many('hospital.treatment', 'appointment_id', string="Treatments")
 
+
+  
+
     @api.model
     def create(self, vals):
         if vals.get('code', 'New') == 'New':

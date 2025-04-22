@@ -1,0 +1,47 @@
+<odoo>
+    <record id="view_hospital_appointment_form_inherit" model="ir.ui.view">
+        <field name="name">hospital.appointment.form.inherit</field>
+        <field name="model">hospital.appointment</field>
+        <field name="inherit_id" ref="your_module_name.view_hospital_appointment_form"/> <!-- inherit original appointment form -->
+        <field name="arch" type="xml">
+            
+            <!-- Add Smart Buttons -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button type="action"
+                        name="%(sale.action_orders)d"
+                        string="Sale Orders"
+                        class="oe_stat_button"
+                        icon="fa-shopping-cart"/>
+                
+                <button type="action"
+                        name="%(account.action_move_out_invoice_type)d"
+                        string="Invoices"
+                        class="oe_stat_button"
+                        icon="fa-file-text-o"/>
+                
+                <button type="action"
+                        name="%(account.action_account_payments)d"
+                        string="Payments"
+                        class="oe_stat_button"
+                        icon="fa-credit-card"/>
+            </xpath>
+
+            <!-- Add New Fields Below Existing Fields -->
+            <xpath expr="//sheet//group" position="inside">
+                <group string="Billing Information">
+                    <field name="total_amount"/>
+                    <field name="pending_amount"/>
+                    <field name="sale_order_line_ids">
+                        <tree editable="bottom">
+                            <field name="product_id"/>
+                            <field name="product_uom_qty"/>
+                            <field name="price_unit"/>
+                            <field name="price_total"/>
+                        </tree>
+                    </field>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

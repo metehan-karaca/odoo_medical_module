@@ -7,7 +7,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/../../../../odoo15/odoo/odoo-bin",
             "args": [
-                "-c", "${workspaceFolder}/../../../../odoo15/custom/configs/odoo.conf",
+                "-c", "${workspaceFolder}/odoo.conf",
                 "-u", "odoo_medical_module"
             ],
             "console": "integratedTerminal",

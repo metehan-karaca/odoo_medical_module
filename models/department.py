@@ -7,7 +7,8 @@ class Department(models.Model):
     _rec_name = 'name'
 
     name = fields.Char(string="Name", required=True, store=True)
-    code = fields.Char(string="Code", required=True, store=True)    
+    code = fields.Char(string="Code", required=True, store=True)
+    icon = fields.Image(string="Icon", store=True)    
 
     _sql_constraints = [
         ('unique_code', 'unique(code)', 'The department code must be unique.')

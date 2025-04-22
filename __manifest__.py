@@ -19,7 +19,9 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base',
+                'sale_management',
+                'account',],
 
     # always loaded
     'data': [
@@ -28,10 +30,12 @@
         'views/templates.xml',
         'views/hospital_doctor_views.xml',
         'views/hospital_patient_views.xml',
+        'views/hospital_department_views.xml',
         'views/hospital_appointment_views.xml',
         'views/hospital_treatment_views.xml',
         'views/hospital_appointment_wizard_views.xml',
         'data/hospital_sequence.xml', 
+        
 
     ],
     # only loaded in demonstration mode, not working yet
