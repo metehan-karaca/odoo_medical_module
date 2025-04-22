@@ -1,2 +1,12 @@
 <odoo>
+    <data noupdate="1">
+        <record id="seq_patient_id" model="ir.sequence">
+            <field name="name">Patient Id Sequence</field>
+            <field name="code">patient.id.seq</field> <!--code goes to patient.py @api.model create next_by_code-->
+            <field name="prefix">PT</field>
+            <field name="padding">4</field>
+            
+        </record>
+
+    </data>
 </odoo>

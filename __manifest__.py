@@ -31,7 +31,7 @@
         'views/hospital_appointment_views.xml',
         'views/hospital_treatment_views.xml',
         'views/hospital_appointment_wizard_views.xml',
-        'data/hospital_sequence.xml',  # Sequence for generating patient ID
+        'data/hospital_sequence.xml', 
 
     ],
     # only loaded in demonstration mode, not working yet

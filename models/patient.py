@@ -10,7 +10,7 @@ class Patient(models.Model):
 
 
     # Patient Fields
-    patient_id = fields.Char(string="Patient ID", required=True, readonly=True, copy=False, default='New', store=True)
+    patient_id = fields.Char(string="Patient ID", readonly=True, copy=False, store=True)
     
     first_name = fields.Char(string="First Name", required=True, store=True)
     last_name = fields.Char(string="Last Name", required=True, store=True)
@@ -28,13 +28,11 @@ class Patient(models.Model):
         ('unique_national_id', 'unique(national_id_no)', 'National ID No must be unique.')
     ]
 
-    # generate patient id
+    # generate patient id from hospital_sequence.xml
     @api.model
     def create(self, vals):
-        if vals.get('patient_id', 'New') == 'New':
 
-            vals['patient_id'] = self.env['ir.sequence'].next_by_code('hospital.patient') or 'New'
-
+        vals['patient_id'] = self.env['ir.sequence'].next_by_code('patient.id.seq')
         return super(Patient, self).create(vals)
 
     # first + last name

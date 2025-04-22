@@ -17,6 +17,7 @@ class Doctor(models.Model):
     department_id = fields.Many2one('hospital.department', string="Department", store=True)
     shift_start = fields.Float(string="Shift Start", store=True)
     shift_end = fields.Float(string="Shift End", store=True)
+    portrait = fields.Image(string="Portrait", store=True)
 
 
     _sql_constraints = [
