@@ -6,7 +6,7 @@ class HospitalAppointment(models.Model):
     _rec_name = 'code'
 
     appointment_date = fields.Datetime(string="Appointment Date", required=True, store=True)
-    code = fields.Char(string="Code", required=True, copy=False, readonly=True, store=True, default='New')
+    code = fields.Char(string="Code", readonly=True, copy=False, store=True)
     doctor_id = fields.Many2many('hospital.doctor', string="Doctors", store=True)
     patient_id = fields.Many2one('hospital.patient', string="Patient", store=True)
     stage = fields.Selection([
@@ -15,15 +15,14 @@ class HospitalAppointment(models.Model):
         ('done', 'Done'),
         ('cancel', 'Cancelled')
     ], string="Stage", default='draft', store=True)
-    treatment_id = fields.One2many('hospital.treatment', 'appointment_id', string="Treatments")
+    treatment_id = fields.One2many('hospital.treatment', 'appointment_id', string="Treatments", store=True)
 
 
-  
-
+    # generate patient id from hospital_sequence.xml
     @api.model
     def create(self, vals):
-        if vals.get('code', 'New') == 'New':
-            vals['code'] = self.env['ir.sequence'].next_by_code('hospital.appointment') or 'New'
+
+        vals['code'] = self.env['ir.sequence'].next_by_code('Appointment.id.seq')
         return super(HospitalAppointment, self).create(vals)
     
     #added for states change buttons part

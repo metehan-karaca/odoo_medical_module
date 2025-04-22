@@ -12,17 +12,17 @@
                         class="oe_highlight"
                         attrs="{'invisible': [('stage', '!=', 'draft')]}"/>
                         
-                    <button name="set_to_done" type="object" string="Set to Done"
-                        class="oe_highlight"
-                        attrs="{'invisible': [('stage', '!=', 'in_progress')]}"/>
-                        
                     <button name="set_to_draft" type="object" string="Set to Draft"
                         class="oe_highlight"
-                        attrs="{'invisible': [('stage', 'not in', ['done', 'in_progress'])]}"/>
+                        attrs="{'invisible': [('stage', 'not in', ['in_progress'])]}"/>
                         
                     <button name="set_to_cancel" type="object" string="Set to Cancel"
                         class="oe_highlight"
-                        attrs="{'invisible': [('stage', '=', 'cancel')]}"/>
+                        attrs="{'invisible': [('stage', '=', 'done')]}"/>
+
+                    <button name="set_to_done" type="object" string="Set to Done"
+                        class="oe_highlight"
+                        attrs="{'invisible': [('stage', '!=', 'in_progress')]}"/>
                 </header>
                 <sheet>
                     <group>

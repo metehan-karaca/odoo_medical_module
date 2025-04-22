@@ -8,5 +8,13 @@
             
         </record>
 
+        <record id="seq_appointment_id" model="ir.sequence">
+            <field name="name">Appointment Id Sequence</field>
+            <field name="code">Appointment.id.seq</field> <!--code goes to appointment.py @api.model create next_by_code-->
+            <field name="prefix">AP</field>
+            <field name="padding">4</field>
+            
+        </record>
+
     </data>
 </odoo>
