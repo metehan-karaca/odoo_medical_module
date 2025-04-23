@@ -19,13 +19,16 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base',
-                'sale_management',
-                'account',],
+    'depends': [
+        'base',
+        'sale', #added to pull sale.order.line in appointment
+    ],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+
+
         'views/menu_views.xml',
         'views/templates.xml',
         'views/hospital_doctor_views.xml',
@@ -34,6 +37,9 @@
         'views/hospital_appointment_views.xml',
         'views/hospital_treatment_views.xml',
         'views/hospital_appointment_wizard_views.xml',
+        'views/hospital_appointment_inherit_views.xml',
+
+
         'data/hospital_sequence.xml', 
         
 
