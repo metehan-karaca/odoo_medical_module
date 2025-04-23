@@ -22,6 +22,7 @@
     'depends': [
         'base',
         'sale', #added to pull sale.order.line in appointment
+        'mail',  # added to use message_follower_ids, activity_ids, and message_ids all for chatter view
     ],
 
     # always loaded
