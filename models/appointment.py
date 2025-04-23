@@ -2,20 +2,21 @@ from odoo import models, fields, api
 
 class HospitalAppointment(models.Model):
     _name = 'hospital.appointment'
+    _inherit = ['mail.thread', 'mail.activity.mixin'] #chatter
     _description = 'Hospital Appointment'
     _rec_name = 'code'
 
-    appointment_date = fields.Datetime(string="Appointment Date", required=True, store=True)
-    code = fields.Char(string="Code", readonly=True, copy=False, store=True)
-    doctor_id = fields.Many2many('hospital.doctor', string="Doctors", store=True)
-    patient_id = fields.Many2one('hospital.patient', string="Patient", store=True)
+    appointment_date = fields.Datetime(string="Appointment Date", required=True, store=True, tracking=True)
+    code = fields.Char(string="Code", readonly=True, copy=False, store=True, tracking=True)
+    doctor_id = fields.Many2many('hospital.doctor', string="Doctors", store=True, tracking=True)
+    patient_id = fields.Many2one('hospital.patient', string="Patient", store=True, tracking=True)
     stage = fields.Selection([
         ('draft', 'Draft'),
         ('in_progress', 'In Progress'),
         ('done', 'Done'),
         ('cancel', 'Cancelled')
-    ], string="Stage", default='draft', store=True)
-    treatment_id = fields.One2many('hospital.treatment', 'appointment_id', string="Treatments", store=True)
+    ], string="Stage", default='draft', store=True, tracking=True)
+    treatment_id = fields.One2many('hospital.treatment', 'appointment_id', string="Treatments", store=True, tracking=True)
 
 
     # generate patient id from hospital_sequence.xml

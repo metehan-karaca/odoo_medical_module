@@ -5,23 +5,24 @@ from datetime import date
 class Patient(models.Model):
     _name = 'hospital.patient'
     _description = 'Patient Information'
+    _inherit = ['mail.thread', 'mail.activity.mixin'] #chatter
 
     _rec_name = 'full_name' #so the default name doesn't leak into gui!!!!!!!
 
 
     # Patient Fields
-    patient_id = fields.Char(string="Patient ID", readonly=True, copy=False, store=True)
+    patient_id = fields.Char(string="Patient ID", readonly=True, copy=False, store=True, tracking=True)
     
-    first_name = fields.Char(string="First Name", required=True, store=True)
-    last_name = fields.Char(string="Last Name", required=True, store=True)
-    full_name = fields.Char(string="Full Name", compute="_compute_full_name", store=True)
-    date_of_birth = fields.Date(string="Date of Birth", store=True)
-    age = fields.Integer(string="Age", readonly=True, compute="_compute_age", store=True)
-    address = fields.Text(string="Address", store=True)
+    first_name = fields.Char(string="First Name", required=True, store=True, tracking=True)
+    last_name = fields.Char(string="Last Name", required=True, store=True, tracking=True)
+    full_name = fields.Char(string="Full Name", compute="_compute_full_name", store=True, tracking=True)
+    date_of_birth = fields.Date(string="Date of Birth", store=True, tracking=True)
+    age = fields.Integer(string="Age", readonly=True, compute="_compute_age", store=True, tracking=True)
+    address = fields.Text(string="Address", store=True, tracking=True)
 
-    phone = fields.Char(string="Phone", store=True)
-    email = fields.Char(string="Email", store=True)
-    national_id_no = fields.Char(string="National ID No", store=True)
+    phone = fields.Char(string="Phone", store=True, tracking=True)
+    email = fields.Char(string="Email", store=True, tracking=True)
+    national_id_no = fields.Char(string="National ID No", store=True, tracking=True)
 
     # sql constraints
     _sql_constraints = [
