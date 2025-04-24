@@ -10,7 +10,14 @@ class HospitalAppointment(models.Model):
     sale_order_lines = fields.One2many('sale.order.line', 'appointment_id', string="Sale Order Lines")
 
     def sale_orders_smart_button(self):
-        return True
+        sale_orders = self.env['sale.order'].search([('order_line.appointment_id', 'in', self.ids)])
+        return {
+            'name': 'Sale Orders',
+            'type': 'ir.actions.act_window',
+            'res_model': 'sale.order',
+            'view_mode': 'tree,form',
+
+        }
     
     def invoice_smart_button(self):
         return True
