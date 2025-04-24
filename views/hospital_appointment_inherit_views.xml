@@ -5,11 +5,36 @@
         <field name="inherit_id" ref="odoo_medical_module.view_hospital_appointment_form"/> <!-- inheriting appointment form!!! -->
         <field name="arch" type="xml">
             
+            <header position="inside">
+                <button name="sale_orders_smart_button"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-star">
+                    
+                </button>
+
+                <button name="invoice_smart_button"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-star">
+                    
+                </button>
+
+                <button name="payment_smart_button"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-star">
+                    
+                </button>
+            </header>
+
 
             <!-- Add New Fields Below Existing Fields -->
-            <xpath expr="//sheet//group" position="inside">
+            <xpath expr="//sheet" position="inside">
                 <group string="new fiedls...">
                     <field name="total_amount"/>
+                    <field name="pending_amount"/>
+                    <field name="sale_order_lines"/>
 
                 </group>
             </xpath>
