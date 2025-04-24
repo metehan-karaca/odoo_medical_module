@@ -9,21 +9,24 @@
                 <button name="sale_orders_smart_button"
                     type="object"
                     class="oe_stat_button"
-                    icon="fa-star">
+                    icon="fa-list"
+                    string="Sale Orders">
                     
                 </button>
 
                 <button name="invoice_smart_button"
                     type="object"
                     class="oe_stat_button"
-                    icon="fa-star">
+                    icon="fa-pencil"
+                    string="Invoices">
                     
                 </button>
 
                 <button name="payment_smart_button"
                     type="object"
                     class="oe_stat_button"
-                    icon="fa-star">
+                    icon="fa-money"
+                    string="Payments">
                     
                 </button>
             </header>
