@@ -7,5 +7,5 @@ from . import patient
 from . import appointment
 from . import treatment
 from . import appointment_wizard
-from . import appointment_inherit
+
 

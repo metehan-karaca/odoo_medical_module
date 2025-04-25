@@ -8,7 +8,8 @@
             "program": "${workspaceFolder}/../../../../odoo15/odoo/odoo-bin",
             "args": [
                 "-c", "${workspaceFolder}/odoo.conf",
-                "-u", "odoo_medical_module"
+                "-u", "odoo_medical_module",
+                
             ],
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",

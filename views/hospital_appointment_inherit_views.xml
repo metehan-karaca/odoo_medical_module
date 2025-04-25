@@ -2,43 +2,48 @@
     <record id="view_hospital_appointment_form_inherit" model="ir.ui.view">
         <field name="name">hospital.appointment.form.inherit</field>
         <field name="model">hospital.appointment</field>
-        <field name="inherit_id" ref="odoo_medical_module.view_hospital_appointment_form"/> <!-- inheriting appointment form!!! -->
+        <field name="inherit_id" ref="odoo_medical_module.view_hospital_appointment_form"/>
         <field name="arch" type="xml">
-            
+
             <header position="inside">
-                <button name="sale_orders_smart_button"
-                    type="object"
-                    class="oe_stat_button"
-                    icon="fa-list"
-                    string="Sale Orders">
-                    
-                </button>
 
-                <button name="invoice_smart_button"
-                    type="object"
-                    class="oe_stat_button"
-                    icon="fa-pencil"
-                    string="Invoices">
-                    
-                </button>
+                <div class="oe_button_box" name="button_box" position="inside">
+                    <button name="sale_orders_smart_button"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-list">
 
-                <button name="payment_smart_button"
-                    type="object"
-                    class="oe_stat_button"
-                    icon="fa-money"
-                    string="Payments">
-                    
-                </button>
+                            <field string="Sale Orders" name="sale_order_count" widget="statinfo"/>
+                    </button>
+
+                    <button name="invoice_smart_button"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-pencil"
+                            string="Invoices">
+                    </button>
+
+                    <button name="payment_smart_button"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-money"
+                            string="Payments">
+                    </button>
+                </div>
+
+                <button name="create_sale_order_button"
+                        type="object"
+                        string="Create Sale Order"
+                        class="btn-primary"
+                        icon="fa-plus"/>
+                
             </header>
 
-
-            <!-- Add New Fields Below Existing Fields -->
             <xpath expr="//sheet" position="inside">
-                <group string="new fiedls...">
+                <group string="Sales Info">
                     <field name="total_amount"/>
                     <field name="pending_amount"/>
                     <field name="sale_order_lines"/>
-
                 </group>
             </xpath>
 

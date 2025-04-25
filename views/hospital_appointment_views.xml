@@ -5,28 +5,57 @@
         <field name="model">hospital.appointment</field>
         <field name="arch" type="xml">
             <form string="Appointment">
-                <!-- states change buttons in header-->
+                <!-- Header with state change buttons -->
                 <header>
-                    
                     <button name="set_to_in_progress" type="object" string="Set to In-Progress"
                         class="oe_highlight"
                         attrs="{'invisible': [('stage', '!=', 'draft')]}"/>
-                        
                     <button name="set_to_draft" type="object" string="Set to Draft"
                         class="oe_highlight"
                         attrs="{'invisible': [('stage', 'not in', ['in_progress'])]}"/>
-                        
                     <button name="set_to_cancel" type="object" string="Set to Cancel"
                         class="oe_highlight"
                         attrs="{'invisible': [('stage', '=', 'done')]}"/>
-
                     <button name="set_to_done" type="object" string="Set to Done"
                         class="oe_highlight"
                         attrs="{'invisible': [('stage', '!=', 'in_progress')]}"/>
+                    <button name="create_sale_order_button"
+                        type="object"
+                        string="Create Sale Order"
+                        class="btn-primary"
+                        icon="fa-plus"/>
+
                 </header>
+
+                <!-- Main form sheet -->
                 <sheet>
+
+                    <div class="oe_button_box" name="button_box">
+
+                        <button name="sale_orders_smart_button"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-list">
+                            <field string="Sale Orders" name="sale_order_count" widget="statinfo"/>
+                        </button>
+
+                        <button name="invoice_smart_button"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-file-invoice">
+                            <field string="Invoices" name="invoice_count" widget="statinfo"/>
+                        </button>
+
+                        <button name="payment_smart_button"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-money-bill">
+                            <field string="Payments" name="payment_count" widget="statinfo"/>
+                        </button>
+
+                    </div>
+
                     <group>
-                        <!--added the attrs to prevent cancellation if done etc, needs work...-->
                         <field name="appointment_date" attrs="{'readonly': [('stage', 'in', ['done', 'cancel'])]}"/>
                         <field name="code" attrs="{'readonly': [('stage', 'in', ['done', 'cancel'])]}"/>
                         <field name="doctor_id" widget="many2many_tags" attrs="{'readonly': [('stage', 'in', ['done', 'cancel'])]}"/>
@@ -34,6 +63,7 @@
                         <field name="stage" attrs="{'readonly': [('stage', 'in', ['done', 'cancel'])]}"/>
                     </group>
 
+                    <!-- Treatments section -->
                     <group string="Treatments">
                         <field name="treatment_id">
                             <tree editable="bottom">
@@ -42,14 +72,21 @@
                             </tree>
                         </field>
                     </group>
+
+                    <!-- Sales Info section -->
+                    <group string="Sales Info">
+                        <field name="total_amount"/>
+                        <field name="pending_amount"/>
+                        <field name="sale_order_lines"/>
+                    </group>
                 </sheet>
-                
+
+                <!-- Chatter -->
                 <div class="oe_chatter">
                     <field name="message_follower_ids"/>
                     <field name="activity_ids"/>
                     <field name="message_ids"/>
                 </div>
-
             </form>
         </field>
     </record>
@@ -63,8 +100,8 @@
                 <field name="code"/>
                 <field name="patient_id"/>
                 <field name="stage"/>
+                <field name="sale_order_count"/>
             </tree>
         </field>
     </record>
-
 </odoo>
