@@ -162,6 +162,20 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
     appointment_id = fields.Many2one('hospital.appointment', string="Appointment")
 
+    def action_open_appointment(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Appointment',
+            'res_model': 'hospital.appointment',
+            'view_mode': 'form',
+            'res_id': self.appointment_id.id,
+            'context': {'default_appointment_id': self.appointment_id.id},
+        }
+
+
+
+
 class AccountMove(models.Model):
     _inherit = 'account.move'
     appointment_id = fields.Many2one('hospital.appointment', string="Appointment")
@@ -174,6 +188,18 @@ class AccountMove(models.Model):
             if sale_order and sale_order.appointment_id:
                 vals['appointment_id'] = sale_order.appointment_id.id
         return super(AccountMove, self).create(vals)
+    
+    def action_open_appointment(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Appointment',
+            'res_model': 'hospital.appointment',
+            'view_mode': 'form',
+            'res_id': self.appointment_id.id,
+            'context': {'default_appointment_id': self.appointment_id.id},
+        }
+
     
 
 
@@ -191,3 +217,15 @@ class AccountPayment(models.Model):
                 if appointment:
                     vals['appointment_id'] = appointment.id
         return super(AccountPayment, self).create(vals)
+    
+    def action_open_appointment(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Appointment',
+            'res_model': 'hospital.appointment',
+            'view_mode': 'form',
+            'res_id': self.appointment_id.id,
+            'context': {'default_appointment_id': self.appointment_id.id},
+        }
+
