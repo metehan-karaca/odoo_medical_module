@@ -44,11 +44,11 @@
 
                     <field name="portrait" widget="image" class="oe_avatar"/>
 
-                    <!-- Adding the user_id field, it will be invisible for the user -->
+                    <!-- added so smart button can use this field -->
                     <field name="user_id" invisible="1"/>
 
                     <!-- Smart button to view user -->
-                    <button name="action_view_user" type="object" string="View User" class="btn-primary"
+                    <button name="action_view_doctor_user" type="object" string="View User" class="btn-primary"
                             attrs="{'invisible': [('user_id', '=', False)]}"/>
 
                 </sheet>

@@ -23,7 +23,7 @@ class Doctor(models.Model):
     portrait = fields.Image(string="Portrait", tracking=True, default=lambda self: self._get_default_image())
     user_id = fields.Many2one('res.users', string="Related User", tracking=True, readonly=True, ondelete='cascade')
 
-    # Address Fields (for invoice partner)
+    # Address felds for invoicing
     street = fields.Char(string="Street", default="Istanbul")
     street2 = fields.Char(string="Street2")
     city = fields.Char(string="City", default="Istanbul")
@@ -89,7 +89,7 @@ class Doctor(models.Model):
                 'state_id': doctor.state_id.id,
                 'zip': doctor.zip,
                 'country_id': doctor.country_id.id,
-                'currency_id': doctor.country_id.currency_id.id,  # Set the currency based on country
+                'currency_id': doctor.country_id.currency_id.id, 
 
                 'groups_id': [(6, 0, [group_internal.id, group_doctor.id, group_sales.id, group_invoicing.id])],
             })
@@ -108,7 +108,7 @@ class Doctor(models.Model):
                 record.partner_id.unlink()
 
     # Smart button to open the user form view
-    def action_view_user(self):
+    def action_view_doctor_user(self):
         for doctor in self:
             if doctor.user_id:
                 return {
