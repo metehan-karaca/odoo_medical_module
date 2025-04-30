@@ -102,21 +102,23 @@ class HospitalAppointment(models.Model):
 
     def create_sale_order_button(self):
         self.ensure_one()
+        if not self.patient_id.partner_id:
+            raise UserError("This patient has no linked contact. Please create or link a res.partner first.")
+
         sale_order = self.env['sale.order'].create({
-            'partner_id': self.patient_id.id,
+            'partner_id': self.patient_id.partner_id.id,
             'appointment_id': self.id,
             'origin': f"Appointment #{self.code or self.id}",
         })
 
-
-
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Created Sale Order',
             'res_model': 'sale.order',
-            'view_mode': 'form',
             'res_id': sale_order.id,
+            'view_mode': 'form',
+            'target': 'current',
         }
+
 
 
 
