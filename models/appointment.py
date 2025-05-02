@@ -10,27 +10,27 @@ class HospitalAppointment(models.Model):
     appointment_date = fields.Datetime(string="Appointment Date", required=True, store=True, tracking=True)
     code = fields.Char(string="Code", readonly=True, copy=False, store=True, tracking=True)
     doctor_id = fields.Many2many('hospital.doctor', string="Doctors", store=True, tracking=True)
-    patient_id = fields.Many2one('hospital.patient', string="Patient", store=True, tracking=True)
+    patient_id = fields.Many2one('hospital.patient', string="Patient", store=True, tracking=True, ondelete='cascade')
     stage = fields.Selection([
         ('draft', 'Draft'),
         ('in_progress', 'In Progress'),
         ('done', 'Done'),
         ('cancel', 'Cancelled')
     ], string="Stage", default='in_progress', store=True, tracking=True)
-    treatment_id = fields.One2many('hospital.treatment', 'appointment_id', string="Treatments", store=True, tracking=True)
+    treatment_id = fields.One2many('hospital.treatment', 'appointment_id', string="Treatments", store=True, tracking=True, ondelete='cascade')
 
-    currency_id = fields.Many2one('res.currency', string='Currency', default=lambda self: self.env.company.currency_id)
+    currency_id = fields.Many2one('res.currency', string='Currency', default=lambda self: self.env.company.currency_id, store=True, tracking=True, ondelete='cascade')
     total_amount = fields.Monetary(string="Total Amount", compute="_compute_total_amount", store=True, currency_field='currency_id')
     pending_amount = fields.Monetary(string="Pending Amount", compute="_compute_pending_amount", store=True, currency_field='currency_id')
 
-    sale_order_lines = fields.One2many('sale.order.line', 'appointment_id', string="Sale Order Lines")
-    sale_order_ids = fields.One2many('sale.order', 'appointment_id', string="Sale Orders")
-    invoice_ids = fields.One2many('account.move', 'appointment_id', string="Invoices")
-    payment_ids = fields.One2many('account.payment', 'appointment_id', string="Payments")
+    sale_order_lines = fields.One2many('sale.order.line', 'appointment_id', string="Sale Order Lines", store=True, tracking=True, ondelete='cascade')
+    sale_order_ids = fields.One2many('sale.order', 'appointment_id', string="Sale Orders", store=True, tracking=True, ondelete='cascade')
+    invoice_ids = fields.One2many('account.move', 'appointment_id', string="Invoices", store=True, tracking=True, ondelete='cascade')
+    payment_ids = fields.One2many('account.payment', 'appointment_id', string="Payments", store=True, tracking=True, ondelete='cascade')
 
-    sale_order_count = fields.Integer(string="Sale Order Count", compute="_compute_sale_order_count")
-    invoice_count = fields.Integer(string="Invoice Count", compute="_compute_invoice_count")
-    payment_count = fields.Integer(string="Payment Count", compute="_compute_payment_count")
+    sale_order_count = fields.Integer(string="Sale Order Count", compute="_compute_sale_order_count", store=True, tracking=True)
+    invoice_count = fields.Integer(string="Invoice Count", compute="_compute_invoice_count", store=True, tracking=True)
+    payment_count = fields.Integer(string="Payment Count", compute="_compute_payment_count", store=True, tracking=True)
 
     @api.depends('sale_order_ids.amount_total')
     def _compute_total_amount(self):
@@ -153,6 +153,18 @@ class HospitalAppointment(models.Model):
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
     appointment_id = fields.Many2one('hospital.appointment', string="Appointment")
+
+    @api.model
+    def create(self, vals):
+        if 'order_id' in vals:
+            sale_order = self.env['sale.order'].browse(vals['order_id'])
+            if sale_order.appointment_id:
+                vals['appointment_id'] = sale_order.appointment_id.id
+
+        # Call the super method to create the record
+        return super(SaleOrderLine, self).create(vals)
+
+
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
