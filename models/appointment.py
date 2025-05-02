@@ -193,14 +193,31 @@ class SaleOrder(models.Model):
             'target': 'new',
         }
     
-    #validations to not create invoice if no payment is made
+    #link payment to invoice and validation
     def action_create_invoice(self):
         for order in self:
             if order.appointment_id:
+                # Check for associated payments
                 payments = self.env['account.payment'].search([('appointment_id', '=', order.appointment_id.id)])
                 if not payments:
                     raise ValidationError("Cannot create invoice before at least one payment is made for this appointment.")
-        return super(SaleOrder, self).action_create_invoice()
+
+                # Call the super method to create the invoice
+                invoice = super(SaleOrder, self).action_create_invoice()
+
+                # Link the payment to the created invoice
+                for inv in invoice:
+                    # Find the associated payment for this appointment
+                    payment = self.env['account.payment'].search([('appointment_id', '=', order.appointment_id.id)], limit=1)
+                    if payment:
+                        inv.write({
+                            'payment_ids': [(4, payment.id)]  # Link payment to invoice
+                        })
+        return invoice
+    
+
+
+
     def action_confirm(self):
         for order in self:
             if order.appointment_id:
