@@ -141,7 +141,7 @@ class SaleOrder(models.Model):
             'context': {'default_appointment_id': self.appointment_id.id},
         }
     
-        
+    # for make payment button in sale order form
     def action_make_payment(self):
         self.ensure_one()
         payment_vals = {
@@ -151,6 +151,7 @@ class SaleOrder(models.Model):
             'partner_type': 'customer',
             'payment_method_id': self.env.ref('account.account_payment_method_manual_in').id,
             'journal_id': self.env['account.journal'].search([('type', '=', 'bank')], limit=1).id,
+            'appointment_id': self.appointment_id.id,
             
         }
         payment = self.env['account.payment'].create(payment_vals)
@@ -161,7 +162,7 @@ class SaleOrder(models.Model):
             'res_model': 'account.payment',
             'view_mode': 'form',
             'res_id': payment.id,
-            'target': 'current',
+            'target': 'new',
         }
 
 

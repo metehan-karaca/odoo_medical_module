@@ -52,12 +52,11 @@
                     <button name="action_view_patient_user" type="object" string="View User" class="btn-primary"
                             attrs="{'invisible': [('user_id', '=', False)]}"/>
 
-                    <button name="action_open_invoice_contact_popup"
+                    <button name="action_add_invoice_contact_popup"
                             type="object"
-                            string="Add Invoice Address"
-                            class="oe_highlight"
-                            attrs="{'invisible': [('user_id', '=', False)]}"
-                            icon="fa-plus"/>
+                            string="Add Invoice Contact"
+                            class="oe_highlight"/>
+
 
 
             </sheet>

@@ -120,19 +120,24 @@ class Patient(models.Model):
             }
         return {}
 
-    def action_open_invoice_contact_popup(self):
+    def action_add_invoice_contact_popup(self):
         self.ensure_one()
-        if self.user_id:
-            return {
-                'type': 'ir.actions.act_window',
-                'name': 'Related User',
-                'res_model': 'res.partner',
-                'view_mode': 'form',
-                'view_id': self.env.ref('base.view_partner_form').id,
-                'res_id': self.partner_id.id,
-                'target': 'new',
+
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Add Child Contact',
+            'res_model': 'res.partner',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_parent_id': self.partner_id.id,
+                'default_type': 'invoice',
+                'default_use_parent_address': True,  # inherits address if desired
+                'form_view_initial_mode': 'edit',
             }
-        return {}
+        }
+
+
 
 
 
