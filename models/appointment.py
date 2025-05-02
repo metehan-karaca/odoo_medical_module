@@ -20,7 +20,7 @@ class HospitalAppointment(models.Model):
 
     currency_id = fields.Many2one('res.currency', string='Currency', default=lambda self: self.env.company.currency_id)
     total_amount = fields.Monetary(string="Total Amount", compute="_compute_total_amount", store=True, currency_field='currency_id')
-    pending_amount = fields.Monetary(string="Pending Amount", compute="_compute_total_amount", store=True, currency_field='currency_id')
+    pending_amount = fields.Monetary(string="Pending Amount", compute="_compute_pending_amount", store=True, currency_field='currency_id')
 
     sale_order_lines = fields.One2many('sale.order.line', 'appointment_id', string="Sale Order Lines")
     sale_order_ids = fields.One2many('sale.order', 'appointment_id', string="Sale Orders")
@@ -31,11 +31,17 @@ class HospitalAppointment(models.Model):
     invoice_count = fields.Integer(string="Invoice Count", compute="_compute_invoice_count")
     payment_count = fields.Integer(string="Payment Count", compute="_compute_payment_count")
 
-    @api.depends('sale_order_lines.price_unit', 'sale_order_lines.product_uom_qty')
+    @api.depends('sale_order_ids.amount_total')
     def _compute_total_amount(self):
         for record in self:
-            total = sum(line.price_unit * line.product_uom_qty for line in record.sale_order_lines)
+            total = sum(order.amount_total for order in record.sale_order_ids)
             record.total_amount = total
+
+    @api.depends('payment_ids.amount')
+    def _compute_pending_amount(self):
+        for record in self:
+            total_paid = sum(payment.amount for payment in record.payment_ids)
+            record.pending_amount = record.total_amount - total_paid
 
     @api.model
     def create(self, vals):
