@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 class HospitalAppointment(models.Model):
     _name = 'hospital.appointment'
@@ -15,7 +16,7 @@ class HospitalAppointment(models.Model):
         ('in_progress', 'In Progress'),
         ('done', 'Done'),
         ('cancel', 'Cancelled')
-    ], string="Stage", default='draft', store=True, tracking=True)
+    ], string="Stage", default='in_progress', store=True, tracking=True)
     treatment_id = fields.One2many('hospital.treatment', 'appointment_id', string="Treatments", store=True, tracking=True)
 
     currency_id = fields.Many2one('res.currency', string='Currency', default=lambda self: self.env.company.currency_id)
@@ -124,6 +125,27 @@ class HospitalAppointment(models.Model):
             'view_mode': 'form',
             'target': 'current',
         }
+    
+    #validations
+    def write(self, vals):
+        if vals.get('stage') == 'done':
+            for record in self:
+                if record.pending_amount > 0:
+                    raise ValidationError("cannot be marked as done with unpaid money")
+
+                sale_orders = self.env['sale.order'].search([('appointment_id', '=', record.id)])
+                if not sale_orders:
+                    raise ValidationError("cannot be marked as done without a sale order")
+
+                invoices = self.env['account.move'].search([
+                    ('appointment_id', '=', record.id),
+                    ('move_type', '=', 'out_invoice'),
+                    ('state', '!=', 'cancel')
+                ])
+                if not invoices:
+                    raise ValidationError("cannot be marked as done without invoice.")
+        return super(HospitalAppointment, self).write(vals)
+
 
 
 

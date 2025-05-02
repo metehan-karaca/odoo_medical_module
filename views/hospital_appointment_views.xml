@@ -25,6 +25,10 @@
                         class="btn-primary"
                         icon="fa-plus"/>
 
+                    <field name="stage" widget="statusbar"
+                        statusbar_visible="draft,in_progress,done"
+                        statusbar_colors="{'cancel': 'red', 'done': 'blue'}"/>
+
                 </header>
 
                 <!-- Main form sheet -->
