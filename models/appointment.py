@@ -192,6 +192,22 @@ class SaleOrder(models.Model):
             'res_id': payment.id,
             'target': 'new',
         }
+    
+    #validations to not create invoice if no payment is made
+    def action_create_invoice(self):
+        for order in self:
+            if order.appointment_id:
+                payments = self.env['account.payment'].search([('appointment_id', '=', order.appointment_id.id)])
+                if not payments:
+                    raise ValidationError("Cannot create invoice before at least one payment is made for this appointment.")
+        return super(SaleOrder, self).action_create_invoice()
+    def action_confirm(self):
+        for order in self:
+            if order.appointment_id:
+                payments = self.env['account.payment'].search([('appointment_id', '=', order.appointment_id.id)])
+                if not payments:
+                    raise ValidationError("Cannot confirm the sale order before at least one payment is made for the associated appointment.")
+        return super(SaleOrder, self).action_confirm()
 
 
 
