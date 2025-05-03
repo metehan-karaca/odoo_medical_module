@@ -193,6 +193,7 @@ class SaleOrder(models.Model):
             'journal_id': self.env['account.journal'].search([('type', '=', 'bank')], limit=1).id,
             'appointment_id': self.appointment_id.id,
             
+            
         }
         payment = self.env['account.payment'].create(payment_vals)
 

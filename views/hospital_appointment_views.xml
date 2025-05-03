@@ -27,7 +27,7 @@
 
                     <field name="stage" widget="statusbar"
                         statusbar_visible="draft,in_progress,done"
-                        statusbar_colors="{'cancel': 'red', 'done': 'blue'}"/>
+                        />
 
                 </header>
 
@@ -64,7 +64,7 @@
                         <field name="code" readonly="1"/>
                         <field name="doctor_id" widget="many2many_tags" attrs="{'readonly': [('stage', 'in', ['done', 'cancel'])]}"/>
                         <field name="patient_id" attrs="{'readonly': [('stage', 'in', ['done', 'cancel'])]}"/>
-                        <field name="stage" attrs="{'readonly': [('stage', 'in', ['done', 'cancel'])]}"/>
+                        
                     </group>
 
                     <!-- Treatments section -->
