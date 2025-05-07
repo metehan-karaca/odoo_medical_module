@@ -21,8 +21,9 @@ class Patient(models.Model):
     email = fields.Char(string="Email", store=True, tracking=True)
     national_id_no = fields.Char(string="National ID No", store=True, tracking=True)
 
-    user_id = fields.Many2one('res.users', string="Related User", store=True, tracking=True, readonly=True)
-    partner_id = fields.Many2one('res.partner', string="Related Partner", readonly=True, store=True, tracking=True) 
+    user_id = fields.Many2one('res.users', string="Related User", store=True, tracking=True, readonly=True, ondelete='cascade')
+    partner_id = fields.Many2one('res.partner', string="Related Partner", readonly=True, store=True, tracking=True, ondelete='cascade')
+    invoice_contact = fields.Many2one('res.partner', string="Related Partner", readonly=True, store=True, tracking=True, ondelete='cascade')
 
     # Address fields
     street = fields.Char(string="Street", default="Istanbul")
@@ -77,9 +78,12 @@ class Patient(models.Model):
                 'state_id': patient.state_id.id,
                 'zip': patient.zip,
                 'country_id': patient.country_id.id,
-                'type': 'invoice',
                 'company_id': patient.company_id.id,
                 'phone': patient.phone,
+                'mobile': patient.phone,
+                'website': patient.email,
+                
+
             })
 
             user = self.env['res.users'].sudo().create({
@@ -93,8 +97,26 @@ class Patient(models.Model):
                 'groups_id': [(6, 0, [group_internal.id, group_patient.id])]
             })
 
+            invoice_contact = self.env['res.partner'].create({
+                'name': patient.full_name + " Invoice address",
+                'type': 'invoice',               
+                'parent_id': partner.id, 
+                'email': patient.email,
+                'phone': patient.phone,
+                'mobile': patient.phone,
+                'street': patient.street,
+                'street2': patient.street2,
+                'city': patient.city,
+                'state_id': patient.state_id.id,
+                'zip': patient.zip,
+                'country_id': patient.country_id.id,
+                'company_id': patient.company_id.id,
+            })
+
+
             patient.user_id = user.id
             patient.partner_id = partner.id
+            patient.invoice_contact = invoice_contact.id
 
         return patient
 
