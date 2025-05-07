@@ -22,7 +22,7 @@
                     <button name="create_sale_order_button"
                         type="object"
                         string="Create Sale Order"
-                        
+                        attrs="{'invisible': [('stage', '!=', 'in_progress')]}"
                         class="btn-primary"
                         icon="fa-plus"/>
 
