@@ -208,26 +208,31 @@ class SaleOrder(models.Model):
     
     #link payment to invoice and validation
     def action_create_invoice(self):
+        res = super(SaleOrder, self).action_create_invoice()
+
         for order in self:
-            if order.appointment_id:
-                # Check for associated payments
-                payments = self.env['account.payment'].search([('appointment_id', '=', order.appointment_id.id)])
-                if not payments:
-                    raise ValidationError("Cannot create invoice before at least one payment is made for this appointment.")
+            invoices = self.env['account.move'].search([
+                ('invoice_origin', '=', order.name),
+                ('move_type', '=', 'out_invoice')
+            ])
 
-                # Call the super method to create the invoice
-                invoice = super(SaleOrder, self).action_create_invoice()
+            payments = self.env['account.payment'].search([
+                ('appointment_id', '=', order.appointment_id.id),
+                ('state', '=', 'posted')
+            ])
 
-                # Link the payment to the created invoice
-                for inv in invoice:
-                    # Find the associated payment for this appointment
-                    payment = self.env['account.payment'].search([('appointment_id', '=', order.appointment_id.id)], limit=1)
-                    if payment:
-                        inv.write({
-                            'payment_ids': [(4, payment.id)]  # Link payment to invoice
-                        })
-        return invoice
-    
+            for invoice in invoices:
+                for payment in payments:
+                    if invoice.state != 'posted':
+                        invoice.action_post()
+
+                    # Assign payment to invoice
+                    payment_move_line = payment.line_ids.filtered(lambda line: line.account_id == invoice.line_ids.filtered(lambda l: l.account_id.user_type_id.type == 'receivable').account_id and line.credit > 0)
+
+                    if payment_move_line:
+                        invoice.js_assign_outstanding_line(payment_move_line.id)
+
+        return res
 
 
 
@@ -273,16 +278,6 @@ class AccountPayment(models.Model):
     _inherit = 'account.payment'
     appointment_id = fields.Many2one('hospital.appointment', string="Appointment", store=True)
 
-    @api.model
-    def create(self, vals):
-        # Link payment to appointment via invoice
-        if not vals.get('appointment_id') and vals.get('invoice_ids'):
-            invoices = self.env['account.move'].browse(vals['invoice_ids'][0][2])  # [0][2] = list of invoice IDs
-            if invoices:
-                appointment = invoices[0].appointment_id
-                if appointment:
-                    vals['appointment_id'] = appointment.id
-        return super(AccountPayment, self).create(vals)
     
     def action_open_appointment(self):
         self.ensure_one()
