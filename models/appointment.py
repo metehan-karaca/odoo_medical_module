@@ -69,7 +69,9 @@ class HospitalAppointment(models.Model):
     @api.depends('invoice_ids')
     def _compute_invoice_count(self):
         for record in self:
-            record.invoice_count = len(record.invoice_ids)
+            # Count invoices with the same domain used in the smart button
+            valid_invoices = record.invoice_ids.filtered(lambda inv: inv.move_type == 'out_invoice')
+            record.invoice_count = len(valid_invoices)
 
     @api.depends('payment_ids')
     def _compute_payment_count(self):
@@ -94,7 +96,8 @@ class HospitalAppointment(models.Model):
             'name': 'Invoices',
             'res_model': 'account.move',
             'view_mode': 'tree,form',
-            'domain': [('appointment_id', '=', self.id)],
+            'domain': [('appointment_id', '=', self.id),
+                       ('move_type', '=', 'out_invoice')],
         }
 
     def payment_smart_button(self):

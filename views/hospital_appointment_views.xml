@@ -22,6 +22,7 @@
                     <button name="create_sale_order_button"
                         type="object"
                         string="Create Sale Order"
+                        
                         class="btn-primary"
                         icon="fa-plus"/>
 
