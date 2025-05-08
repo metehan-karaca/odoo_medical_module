@@ -1,0 +1,21 @@
+# compiled
+__pycache__/
+*.py[cod]
+*$py.class
+
+
+# IDE
+.vscode/
+
+
+# python environment
+.env
+.venv
+env/
+venv/
+
+# logs
+*.log
+
+# odoo config
+odoo.conf
