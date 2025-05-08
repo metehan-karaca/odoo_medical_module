@@ -195,6 +195,7 @@ class SaleOrder(models.Model):
             'payment_method_id': self.env.ref('account.account_payment_method_manual_in').id,
             'journal_id': self.env['account.journal'].search([('type', '=', 'bank')], limit=1).id,
             'appointment_id': self.appointment_id.id,
+            'sale_order_id': self.id,
             
             
         }
@@ -208,6 +209,8 @@ class SaleOrder(models.Model):
             'res_id': payment.id,
             'target': 'new',
         }
+    
+    
     
     #link payment to invoice and validation
     def action_create_invoice(self):
@@ -236,8 +239,7 @@ class SaleOrder(models.Model):
                         invoice.js_assign_outstanding_line(payment_move_line.id)
 
         return res
-
-
+    
 
     def action_confirm(self):
         for order in self:
@@ -246,6 +248,25 @@ class SaleOrder(models.Model):
                 if not payments:
                     raise ValidationError("Cannot confirm the sale order before at least one payment is made for the associated appointment.")
         return super(SaleOrder, self).action_confirm()
+    
+
+
+    #adding to show paid amounts at the bottom
+    payment_ids = fields.One2many('account.payment', 'sale_order_id', string="Payments")
+
+    amount_paid = fields.Monetary(string="Amount Paid", compute='_compute_payment_amounts', store=True)
+    amount_due = fields.Monetary(string="Amount Due", compute='_compute_payment_amounts', store=True)
+
+    @api.depends('amount_total', 'payment_ids.amount', 'payment_ids.state')
+    def _compute_payment_amounts(self):
+        for order in self:
+            payments = self.env['account.payment'].search([
+                ('sale_order_id', '=', order.id),
+                ('state', '=', 'posted')
+            ])
+            total_paid = sum(payments.mapped('amount'))
+            order.amount_paid = total_paid
+            order.amount_due = order.amount_total - total_paid
 
 
 
@@ -280,6 +301,8 @@ class AccountMove(models.Model):
 class AccountPayment(models.Model):
     _inherit = 'account.payment'
     appointment_id = fields.Many2one('hospital.appointment', string="Appointment", store=True)
+
+    sale_order_id = fields.Many2one('sale.order', string="Sale Order", store=True)
 
     
     def action_open_appointment(self):

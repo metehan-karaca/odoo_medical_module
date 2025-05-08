@@ -127,6 +127,18 @@
         </field>
     </record>
 
+    <record id="view_order_form_inherit_payment_info" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.payment.info</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[contains(@class, 'oe_subtotal_footer')]" position="inside">
+                <field name="amount_paid" readonly="1"/>
+                <field name="amount_due" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
     <record id="account_move_form_inherit_appointment_button" model="ir.ui.view">
         <field name="name">account.move.form.appointment.button</field>
         <field name="model">account.move</field>
